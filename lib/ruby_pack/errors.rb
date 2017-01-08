@@ -1,0 +1,2 @@
+class ProcessExists < RuntimeError
+end

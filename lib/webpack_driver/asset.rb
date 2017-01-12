@@ -1,10 +1,10 @@
 module WebpackDriver
 
     class Asset
-        attr_reader :name, :size
+        attr_reader :file, :size
 
-        def initialize(name, size)
-            @name = name
+        def initialize(file, size)
+            @file = file
             @size = size
         end
 

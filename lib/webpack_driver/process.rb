@@ -1,20 +1,24 @@
 require 'childprocess'
+require 'irb'
+require 'scanf'
 
-module RubyPack
+module WebpackDriver
 
     class Process
         READ_CHUNK_SIZE = 1024
 
         extend Forwardable
 
-        def_delegators :@proc, :alive?
-
         def initialize(*flags)
             @buffer = ''
             args = ["node"] + flags
             @proc = ::ChildProcess.build(*args)
-            @proc.environment['NODE_ENV'] = RubyPack.config.environment
-            @proc.cwd = RubyPack.config.directory
+            @proc.environment['NODE_ENV'] = WebpackDriver.config.environment
+            @proc.cwd = WebpackDriver.config.directory
+        end
+
+        def alive?
+            @proc.alive?
         end
 
         def start
@@ -36,10 +40,22 @@ module RubyPack
             @buffer
         end
 
+        def assets
+            @assets ||= read_assets
+        end
+
         protected
 
+        def read_assets
+            assets = {}
+            output.scan(/\s+\[\d+\]\s+(?:\.\/)?(\S+)\s+(.*?)\s\{/) do |name, size|
+                assets[name] = Asset.new(name, size)
+            end
+            assets
+        end
+
         def read_available
-            return if @output.closed?
+            return if @output.nil? || @output.closed?
             begin
                 loop{ @buffer << @output.read_nonblock(READ_CHUNK_SIZE) }
             rescue IO::EAGAINWaitReadable, EOFError

@@ -1,23 +1,23 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'ruby_pack/version'
+require 'webpack_driver/version'
 
 Gem::Specification.new do |spec|
-    spec.name          = "ruby_pack"
-    spec.version       = RubyPack::VERSION
+    spec.name          = "webpack_driver"
+    spec.version       = WebpackDriver::VERSION
     spec.authors       = ["Nathan Stitt"]
     spec.email         = ["nathan@stitt.org"]
 
-    spec.summary       = %q{Control webpack from Ruby.}
-    spec.description   = %q{Control webpack from Ruby }
-    spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+    spec.summary       = %q{Run webpack-dev-server in a sub process}
+    spec.description   = %q{Run webpack and webpack-dev-server in a sub process}
+    spec.homepage      = "https://github.com/nathanstitt/webpack_driver"
     spec.license       = "MIT"
 
     # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
     # to allow pushing to a single host or delete this section to allow pushing to any host.
     if spec.respond_to?(:metadata)
-        spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
+        spec.metadata['allowed_push_host'] = "https://rubygems.org"
     else
         raise "RubyGems 2.0 or newer is required to protect against " \
               "public gem pushes."

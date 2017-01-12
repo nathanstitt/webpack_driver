@@ -1,4 +1,4 @@
-module RubyPack
+module WebpackDriver
 
     module Config
 

@@ -1,4 +1,4 @@
-# RubyPack
+# WebpackDriver
 
 Webpack integration for Ruby.  RubyWebpack controls execution of both webpack and webpack-dev-server to serve assets in developer mode and to compile assets for production.
 
@@ -25,15 +25,15 @@ Or install it yourself as:
 Initialization, will create a `package.json`, `yarn.lock`, a bare-bones `webpack.config.js` and then run yarn install (via the [Knitter](https://github.com/nathanstitt/knitter) gem).
 
 ```ruby
-RubyPack.config do | config |
+WebpackDriver.config do | config |
   config.directory = '/tmp/test'
 end
-RubyPack::Configuration.generate
+WebpackDriver::Configuration.generate
 ```
 
 Production compilation (TODO):
 ```ruby
-compiler = RubyPack::Compiler.new
+compiler = WebpackDriver::Compiler.new
 compiler.generate
 p compiler.files
 ```
@@ -41,7 +41,7 @@ p compiler.files
 Dev server:
 
 ```ruby
-process = RubyPack::DevServer.new
+process = WebpackDriver::DevServer.new
 process.start
 fail("failed to start webpack #{process.output}") unless process.alive?
 puts "Webpack dev server running on #{process.detected_port}"

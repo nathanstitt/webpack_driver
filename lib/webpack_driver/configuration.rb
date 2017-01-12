@@ -1,13 +1,14 @@
 require_relative 'configuration/base'
 
-module RubyPack
+module WebpackDriver
 
     module Configuration
 
         class << self
 
             def generate
-                Base.start
+
+                Base.start# (verbose: false)
             end
 
         end

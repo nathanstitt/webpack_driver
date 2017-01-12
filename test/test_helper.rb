@@ -1,23 +1,33 @@
 require "minitest"
 require "minitest/autorun"
 
-require 'pry'
-require_relative '../lib/ruby_pack.rb'
+require_relative './process_mock.rb'
+require_relative '../lib/webpack_driver.rb'
 
 module HelperMethods
-    FIXTURES_PATH =  Pathname.new(__FILE__).dirname.join('fixtures')
+    FIXTURES =  Pathname.new(__FILE__).dirname.join('fixtures')
 
     def with_basic_config
-
-        RubyPack.config do | config |
-            config.directory = FIXTURES_PATH
+        WebpackDriver.config do | config |
+            config.directory = FIXTURES
         end
-        RubyPack::Configuration.generate
+        WebpackDriver::Configuration.generate
         yield
     end
 
+    def create_process(klass, arguments: [], output:, runtime: 0.1)
+        ChildProcess.stub(
+            :build, ProcessMock.new(output: output, runtime: runtime)
+        ) do
+            klass.new(*arguments)
+        end
+    end
 
+    def process_output(name)
+        FIXTURES.join(name.to_s + '.txt').read
+    end
 end
+
 
 
 class MiniTest::Test

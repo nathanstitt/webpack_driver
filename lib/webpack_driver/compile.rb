@@ -1,9 +1,9 @@
-module RubyPack
+module WebpackDriver
 
     class Compile < Process
 
         def initialize(*flags)
-            super(RubyPack.config.compile_script, *flags)
+            super(WebpackDriver.config.compile_script, *flags)
         end
 
         def valid?

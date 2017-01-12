@@ -1,25 +1,24 @@
 require "thor"
 require 'knitter'
 
-module RubyPack
+module WebpackDriver
 
     module Configuration
 
         class Base < Thor::Group
             include Thor::Actions
-            quiet = true
 
             def self.source_root
                 Pathname.new(__FILE__).dirname.join("..","..","..","templates")
             end
 
             def set_destination_root
-                self.destination_root = RubyPack.config.directory
+                self.destination_root = WebpackDriver.config.directory
             end
 
             def yarn
-                yarn = Knitter::Yarn.new(RubyPack.config.directory)
-                unless RubyPack.config.directory.join('yarn.lock').exist?
+                yarn = Knitter::Yarn.new(WebpackDriver.config.directory)
+                unless WebpackDriver.config.directory.join('yarn.lock').exist?
                     yarn.init
                 end
                 %w{webpack webpack-dev-server}.each do | package |
@@ -32,8 +31,8 @@ module RubyPack
             end
 
             def generate
-                template "webpack.config.js"
-                template "index.js"
+                template("webpack.config.js", verbose: false)
+                template("index.js", verbose: false)
             end
         end
 

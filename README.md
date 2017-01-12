@@ -1,6 +1,10 @@
 # WebpackDriver
 
-Webpack integration for Ruby.  RubyWebpack controls execution of both webpack and webpack-dev-server to serve assets in developer mode and to compile assets for production.
+[![Build Status](https://travis-ci.org/nathanstitt/webpack_driver.svg?branch=master)](https://travis-ci.org/nathanstitt/webpack_driver)
+
+Control webpack from Ruby
+
+WebpackDriver controls execution of both webpack and webpack-dev-server to serve assets in developer mode and to compile assets for production.
 
 It runs the dev server in the background using the `childprocess` gem and monitors it's output to detect the current status.
 

@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
     spec.email         = ["nathan@stitt.org"]
 
     spec.summary       = %q{Run webpack-dev-server in a sub process}
-    spec.description   = %q{Run webpack and webpack-dev-server in a sub process}
+    spec.description   = %q{Run webpack and webpack-dev-server in a sub process.  Autodetects the port, url and assets that are generated.}
     spec.homepage      = "https://github.com/nathanstitt/webpack_driver"
     spec.license       = "MIT"
 

@@ -14,12 +14,12 @@ module WebpackDriver
             alive? && output.end_with?("VALID.\n")
         end
 
-        def serving_from_url
+        def detected_url
             match = URL.match(output)
             match ? match[0] : nil
         end
 
-        def serving_from_port
+        def detected_port
             match = URL.match(output)
             match ? match[3].to_i : nil
         end

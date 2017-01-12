@@ -44,7 +44,8 @@ Dev server:
 process = WebpackDriver::DevServer.new
 process.start
 fail("failed to start webpack #{process.output}") unless process.alive?
-puts "Webpack dev server running on #{process.detected_port}"
+puts "Webpack dev server running on port #{process.detected_port} url=#{process.detected_url}"
+p process.assets.map{|asset| asset.file }
 sleep 30
 process.stop
 ```

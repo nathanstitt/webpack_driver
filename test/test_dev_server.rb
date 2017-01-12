@@ -28,8 +28,8 @@ class TestDevServer < MiniTest::Test
         refute process.valid?
         assert_equal 1, process.assets.length
         assert_equal '42 bytes', process.assets['index.js'].size
-        assert_equal "http://localhost:1233/webpack-dev-server/", process.serving_from_url
-        assert_equal 1233, process.serving_from_port
+        assert_equal "http://localhost:1233/webpack-dev-server/", process.detected_url
+        assert_equal 1233, process.detected_port
     end
 
 end

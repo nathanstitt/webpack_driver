@@ -32,7 +32,8 @@ module WebpackDriver
 
             def generate
                 template("webpack.config.js", verbose: false)
-                template("index.js", verbose: false)
+                template("status-plugin.js", verbose: false, force: true)
+                template("index.js", verbose: false, force: true)
             end
         end
 

@@ -1,8 +1,5 @@
 require_relative './test_helper'
 
-OUTPUT=<<END_OUTPUT
-END_OUTPUT
-
 class TestDevServer < MiniTest::Test
 
     def around
@@ -11,25 +8,28 @@ class TestDevServer < MiniTest::Test
         end
     end
 
+
     def test_starting_dev_server
         process = create_process(
             WebpackDriver::DevServer,
-            arguments: ['--port', '1233'],
-            output: :simple_dev_server,
-            runtime: 1.1
+            arguments: ['--port', '1833'],
+            output: :simple_dev_server, runtime: 0.3
         )
-        process.start
-        assert process.alive?
-        sleep(1.0)
-
-        assert process.valid?
-
-        process.stop
-        refute process.valid?
-        assert_equal 1, process.assets.length
-        assert_equal '42 bytes', process.assets['index.js'].size
-        assert_equal "http://localhost:1233/webpack-dev-server/", process.detected_url
-        assert_equal 1233, process.detected_port
+        begin
+            process.start
+            assert process.alive?
+            sleep(0.2) # test that process is still running, needs increased if not mocked
+            assert_equal 1, process.assets.size
+            assert_equal 1425, process.assets['bundle.js'].size
+            assert_equal "localhost", process.host
+            assert_equal 1833, process.port
+            assert process.alive?
+            assert process.valid?
+            process.stop
+            refute process.alive?
+            refute process.valid?
+        ensure
+            process.stop
+        end
     end
-
 end

@@ -15,10 +15,14 @@ module HelperMethods
         yield
     end
 
-    def create_process(klass, arguments: [], output:, runtime: 0.1)
-        ChildProcess.stub(
-            :build, ProcessMock.new(output: output, runtime: runtime)
-        ) do
+    def create_process(klass, arguments: [], output:, runtime: 0.1, stub: true)
+        if stub
+            ChildProcess.stub(
+                :build, ProcessMock.new(output: output, runtime: runtime)
+            ) do
+                klass.new(*arguments)
+            end
+        else
             klass.new(*arguments)
         end
     end

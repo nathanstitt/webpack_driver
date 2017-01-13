@@ -7,7 +7,7 @@ module WebpackDriver
         end
 
         def valid?
-            !alive? && output.end_with?("[built]\n")
+            !alive? && super
         end
 
     end

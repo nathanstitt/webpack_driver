@@ -1,6 +1,13 @@
+// Responsible for reporting status back to webpack-driver
+var WebpackDriverStatusPlugin = require('./status-plugin.js');
+
 module.exports = {
     entry: "./index.js",
     debug: true,
+    plugins: [
+       new WebpackDriverStatusPlugin() // must not be removed
+    ],
+    info: false,
     output: {
         path: __dirname,
         filename: "bundle.js"

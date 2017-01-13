@@ -16,11 +16,9 @@ module WebpackDriver
                 self.destination_root = WebpackDriver.config.directory
             end
 
-            def yarn
+            def install_using_yarn
                 yarn = Knitter::Yarn.new(WebpackDriver.config.directory)
-                unless WebpackDriver.config.directory.join('yarn.lock').exist?
-                    yarn.init
-                end
+                yarn.init unless yarn.valid?
                 %w{webpack webpack-dev-server}.each do | package |
                     package = Knitter::Package.new(package, yarn: yarn)
                     unless package.installed?

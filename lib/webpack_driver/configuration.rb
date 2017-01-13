@@ -7,8 +7,7 @@ module WebpackDriver
         class << self
 
             def generate
-
-                Base.start# (verbose: false)
+                Base.start
             end
 
         end

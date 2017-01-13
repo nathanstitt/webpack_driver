@@ -18,9 +18,6 @@ module WebpackDriver
 
             def install_using_yarn
                 yarn = Knitter::Yarn.new(WebpackDriver.config.directory)
-                puts WebpackDriver.config.directory.join('package.json').to_s
-                puts WebpackDriver.config.directory.join('package.json').exist?
-                puts yarn.valid?
                 yarn.init unless yarn.valid?
                 %w{webpack webpack-dev-server}.each do | package |
                     package = Knitter::Package.new(package, yarn: yarn)

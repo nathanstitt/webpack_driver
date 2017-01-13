@@ -10,7 +10,7 @@ module WebpackDriver
 
         extend Forwardable
 
-        attr_reader :assets
+        attr_reader :assets, :buffer
 
         def initialize(*flags)
             self.reset!
@@ -35,13 +35,8 @@ module WebpackDriver
 
         def stop
             @proc.stop
-#            read_available
             @output.close
             @listener.join
-        end
-
-        def output
-            @buffer
         end
 
         def valid?
@@ -72,28 +67,11 @@ module WebpackDriver
         def listen_for_status_updates
             Thread.new do
                 @output.each_line do | l |
-                #    puts l
                     match = l.match(/STATUS: (.*)/)
                     record_message(JSON.parse(match[1])) if match
                 end
             end
         end
-
-        # def read_assets
-        #     assets = {}
-        #     output.scan(/\s+\[\d+\]\s+(?:\.\/)?(\S+)\s+(.*?)\s\{/) do |name, size|
-        #         assets[name] = Asset.new(name, size)
-        #     end
-        #     assets
-        # end
-
-        # def read_available
-        #     return if @output.nil? || @output.closed?
-        #     begin
-        #         loop{ @buffer << @output.read_nonblock(READ_CHUNK_SIZE) }
-        #     rescue IO::EAGAINWaitReadable, EOFError
-        #     end
-        # end
 
     end
 end

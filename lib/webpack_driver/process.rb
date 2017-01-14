@@ -34,8 +34,8 @@ module WebpackDriver
         end
 
         def stop
+            @output.close unless @output.closed?
             @proc.stop
-            @output.close
             @listener.join
         end
 

@@ -7,4 +7,12 @@ Rake::TestTask.new do |t|
 end
 desc "Run tests"
 
+task :console do
+  require 'irb'
+  require 'irb/completion'
+  require_relative './lib/webpack_driver'
+  ARGV.clear
+  IRB.start
+end
+
 task :default => :test

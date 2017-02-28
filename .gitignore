@@ -1,3 +1,7 @@
+index.js
+node_modules
+package.json
+yarn.lock
 /.bundle/
 /.yardoc
 /Gemfile.lock

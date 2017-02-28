@@ -29,30 +29,38 @@ Or install it yourself as:
 Initialization will create a `package.json`, `yarn.lock`, a bare-bones `webpack.config.js` and then run yarn install (via the [Knitter](https://github.com/nathanstitt/knitter) gem).
 
 ```ruby
-
-config = WebpackDriver::Configuration.new(
-    WebpackDriver::Configuration.new('/path/to/my/webpack.config.js')
-)
+config = WebpackDriver::Configuration.new('/path/to/my/webpack.config.js')
 config.generate!
 ```
 
-Production compilation (TODO):
+Production compilation:
 ```ruby
-compiler = WebpackDriver::Compiler.new
-compiler.generate
-p compiler.files
+config = WebpackDriver::Configuration.new('/path/to/my/webpack.config.js')
+compiler = WebpackDriver::Compile.new(config)
+compiler.start
+sleep 1 while compiler.alive?
+p compiler.assets
 ```
 
 Dev server:
-
 ```ruby
-process = WebpackDriver::DevServer.new
-process.start
-fail("failed to start webpack #{process.output}") unless process.alive?
-puts "Webpack dev server running on port #{process.detected_port} url=#{process.detected_url}"
-p process.assets.map{|asset| asset.file }
-sleep 30
-process.stop
+config = WebpackDriver::Configuration.new('/path/to/my/webpack.config.js', {
+    port: 8333
+})
+server = WebpackDriver::DevServer.new(config)
+server.start
+fail("failed to start webpack #{server.output}") unless server.alive?
+
+# wait for server to compile startup assets
+sleep 1 until server.valid?
+
+puts "Webpack dev server running on port #{server.port} url=#{server.url}"
+
+p server.assets.map{|asset| asset.file }
+sleep 30 # do other stuff
+server.stop
+fail("failed to stop webpack #{server.output}") if server.alive?
+
 ```
 
 

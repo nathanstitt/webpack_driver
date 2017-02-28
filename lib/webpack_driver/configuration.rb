@@ -1,3 +1,5 @@
+require 'logger'
+require 'pathname'
 require_relative 'configuration/generated'
 require_relative 'configuration/example'
 

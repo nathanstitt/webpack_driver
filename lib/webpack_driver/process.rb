@@ -25,8 +25,6 @@ module WebpackDriver
             @proc.environment.merge!(
                 config.environment
             )
-            puts "ENV"
-            p config.environment
             @proc.cwd = config.directory
         end
 

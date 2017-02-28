@@ -7,24 +7,20 @@ require_relative '../lib/webpack_driver.rb'
 module HelperMethods
     FIXTURES =  Pathname.new(__FILE__).dirname.join('fixtures')
 
-    def with_basic_config
-        WebpackDriver.config do | config |
-            config.directory = FIXTURES
-        end
-        WebpackDriver::Configuration.generate
-        yield
-    end
-
-    def create_process(klass, arguments: [], output:, runtime: 0.1, stub: true)
+    def create_process(klass, config:, output:, runtime: 0.1, stub: true)
         if stub
             ChildProcess.stub(
                 :build, ProcessMock.new(output: output, runtime: runtime)
             ) do
-                klass.new(*arguments)
+                klass.new(config)
             end
         else
-            klass.new(*arguments)
+            klass.new(config)
         end
+    end
+
+    def test_configuration(options = {})
+        WebpackDriver::Configuration.new('/tmp/test-webpack.config.js', options)
     end
 
     def process_output(name)

@@ -2,17 +2,10 @@ require_relative './test_helper'
 
 class TestDevServer < MiniTest::Test
 
-    def around
-        with_basic_config do
-            yield
-        end
-    end
-
-
     def test_starting_dev_server
         process = create_process(
             WebpackDriver::DevServer,
-            arguments: ['--port', '1833'],
+            config: test_configuration(port: 1833),
             output: :simple_dev_server, runtime: 0.3
         )
         begin
@@ -32,4 +25,5 @@ class TestDevServer < MiniTest::Test
             process.stop
         end
     end
+
 end

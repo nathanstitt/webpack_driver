@@ -13,7 +13,7 @@ It runs the dev server in the background using the `childprocess` gem and monito
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'ruby_pack'
+gem 'webpack_driver'
 ```
 
 And then execute:
@@ -22,17 +22,18 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install ruby_pack
+    $ gem install webpack_driver
 
 ## Usage
 
-Initialization, will create a `package.json`, `yarn.lock`, a bare-bones `webpack.config.js` and then run yarn install (via the [Knitter](https://github.com/nathanstitt/knitter) gem).
+Initialization will create a `package.json`, `yarn.lock`, a bare-bones `webpack.config.js` and then run yarn install (via the [Knitter](https://github.com/nathanstitt/knitter) gem).
 
 ```ruby
-WebpackDriver.config do | config |
-  config.directory = '/tmp/test'
-end
-WebpackDriver::Configuration.generate
+
+config = WebpackDriver::Configuration.new(
+    WebpackDriver::Configuration.new('/path/to/my/webpack.config.js')
+)
+config.generate!
 ```
 
 Production compilation (TODO):

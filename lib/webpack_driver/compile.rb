@@ -2,8 +2,9 @@ module WebpackDriver
 
     class Compile < Process
 
-        def initialize(*flags)
-            super(WebpackDriver.config.compile_script, *flags)
+        def initialize(config)
+            config.environment ||= { NODE_ENV: 'production' }
+            super('webpack', config)
         end
 
         def valid?

@@ -1,0 +1,10 @@
+var config = require('<%= options[:config].file %>');
+var WebpackDriverStatusPlugin = require('<%= options[:config].gem_root %>/lib/status-plugin.js');
+
+config.plugins = (config.plugins || []);
+
+config.plugins.push(
+  new WebpackDriverStatusPlugin()
+);
+
+module.exports = config;

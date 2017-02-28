@@ -1,34 +1,17 @@
 module WebpackDriver
 
-
+    # A wrapper around an instance of `webpak-dev-server`
     class DevServer < Process
 
         attr_reader :port, :host, :path
 
-#        URL = /(https?:\/\/)([\da-z\.-]+)\:(\d+)\/([\da-z\.-]+\/)?/
-
-        def initialize(*flags)
-
-            config = WebpackDriver.config
-            flags = ['--port', config.port] if config.port
-            super(config.dev_server_script, *flags)
+        def initialize(config)
+            super('webpack-dev-server', config)
         end
-
 
         def valid?
             alive? && super
         end
-
-        # def detected_url
-        #     match = URL.match(output)
-        #     match ? match[0] : nil
-        # end
-
-        # def detected_port
-
-        #     match = URL.match(output)
-        #     match ? match[3].to_i : nil
-        # end
 
         private
 
@@ -41,5 +24,4 @@ module WebpackDriver
             super
         end
     end
-
 end

@@ -23,6 +23,7 @@ module WebpackDriver
 
 
             def output
+                return unless options[:config].file.exist?
                 opts = { verbose: false, force: true }
                 template(
                     options[:config].file.relative_path_from(self.class.source_root),

@@ -30,10 +30,8 @@ module WebpackDriver
             @directory ||= Pathname.getwd
             @output_path ||= @directory.join('public', 'assets')
             @tmp_directory ||= @directory.join('tmp')
-            if file.exist?
-                @generated = Generated.new([], config: self)
-                @generated.invoke_all
-            end
+            @generated = Generated.new([], config: self)
+            @generated.invoke_all
         end
 
         def manifest_file

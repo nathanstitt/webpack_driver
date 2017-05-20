@@ -37,6 +37,7 @@ module WebpackDriver
             @proc.io.stdout = @proc.io.stderr = w
             @proc.start
             w.close
+            @progress = 0.0
             @listener = listen_for_status_updates
         end
 
@@ -47,7 +48,7 @@ module WebpackDriver
         end
 
         def in_progress?
-            !@error && @progress && @progress != 1
+            !! ( !@error && @progress && @progress != 1 )
         end
 
         protected

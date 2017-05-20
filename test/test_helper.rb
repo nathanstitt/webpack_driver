@@ -20,7 +20,10 @@ module HelperMethods
     end
 
     def test_configuration(custom_options = {})
+        logger = Logger.new(STDOUT)
+        logger.level = Logger::WARN
         options = {
+            logger: logger,
             file: FIXTURES.join('webpack.config.js'),
             tmp_directory: FIXTURES.join('..', 'tmp'),
             output_path: FIXTURES.join('..', 'tmp')

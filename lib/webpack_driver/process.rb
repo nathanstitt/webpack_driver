@@ -71,7 +71,10 @@ module WebpackDriver
         end
 
         def record_message(msg)
-            @messages << msg unless msg['type'] == 'progress'
+            unless msg['type'] == 'progress'
+                @messages << msg
+                config.logger.debug(msg)
+            end
             case msg['type']
             when 'status'
                 @last_status = msg['value']
@@ -83,8 +86,6 @@ module WebpackDriver
                 record_error(msg['value'])
             when 'config'
                 config.output_path = Pathname.new(msg['value']['output_path'])
-            else
-                config.logger.debug(msg)
             end
         end
 
@@ -96,7 +97,6 @@ module WebpackDriver
                         match = l.match(/^STATUS: (.*)/)
                         if match
                             record_message(JSON.parse(match[1]))
-                            config.logger.debug(l.chomp)
                         else
                             config.logger.info(l.chomp)
                         end

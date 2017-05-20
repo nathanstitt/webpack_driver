@@ -67,7 +67,6 @@ module WebpackDriver
 
         def launch(development:)
             raise "Already launched" unless @process.nil?
-            logger.info "Startint"
             @process = development ? DevServer.new(self) : Compile.new(self)
         end
 

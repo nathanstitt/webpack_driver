@@ -92,7 +92,6 @@ module WebpackDriver
         def listen_for_status_updates
             Thread.new do
                 @output.each_line do | l |
-                puts l
                     begin
                         match = l.match(/^STATUS: (.*)/)
                         if match

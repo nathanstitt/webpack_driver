@@ -10,22 +10,34 @@ module WebpackDriver
         attr_accessor :port
         attr_accessor :logger
         attr_accessor :compile_script
-        attr_accessor :directory
+        attr_accessor :tmp_directory
         attr_accessor :cmd_line_flags
+        attr_accessor :output_path
         attr_writer   :environment
-
-        attr_reader :file
-        attr_reader :generated
+        attr_accessor :file
+        attr_accessor :directory
         attr_accessor :logger
+
+        attr_reader :process
+
+
 
         ROOT = Pathname.new(__FILE__).dirname.join('..', '..')
 
-        def initialize(file = './webpack.config.js', options = {})
+        def initialize(options = {})
             options.each { |k, v| send("#{k}=", v) }
-            @directory ||= '.'
-            @file = Pathname.new(file)
-            @generated = Tempfile.new(['webpack.config', '.js'])
-            Generated.new([], config: self).invoke_all
+            @file = Pathname.new(file) unless file.nil?
+            @directory ||= Pathname.getwd
+            @output_path ||= @directory.join('public', 'assets')
+            @tmp_directory ||= @directory.join('tmp')
+            if file.exist?
+                @generated = Generated.new([], config: self)
+                @generated.invoke_all
+            end
+        end
+
+        def manifest_file
+            output_path.join('manifiest.json')
         end
 
         def generate!
@@ -34,10 +46,6 @@ module WebpackDriver
 
         def present?
             file.exist?
-        end
-
-        def path
-            @generated.path
         end
 
         def gem_root
@@ -49,7 +57,7 @@ module WebpackDriver
         end
 
         def flags
-            opts = ['--config', path]
+            opts = ['--config', @generated.path.to_s]
             opts += ['--port', port] if port
             opts += cmd_line_flags if cmd_line_flags
             opts
@@ -59,6 +67,11 @@ module WebpackDriver
             @logger ||= Logger.new(STDOUT)
         end
 
-    end
+        def launch(development:)
+            raise "Already launched" unless @process.nil?
+            logger.info "Startint"
+            @process = development ? DevServer.new(self) : Compile.new(self)
+        end
 
+    end
 end

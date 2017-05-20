@@ -11,4 +11,5 @@ yarn.lock
 /pkg/
 /spec/reports/
 /tmp/
-/test/fixtures
+test/fixtures
+test/tmp

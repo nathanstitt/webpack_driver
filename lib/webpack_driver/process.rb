@@ -12,20 +12,23 @@ module WebpackDriver
 
         def_delegators :@proc, :alive?, :environment, :wait
 
-        attr_reader :assets, :messages
-        attr_reader :config
+        attr_reader :config, :assets, :messages, :progress, :error,
+                    :last_compilation_message, :last_status
 
         def initialize(script, config)
             self.reset!
             @config = config
             args = ["./node_modules/.bin/#{script}"] + config.flags
-
+            config.logger.info("Starting webpack using command:\n#{args.join(' ')}")
             @proc = ::ChildProcess.build(*args)
 
             @proc.environment.merge!(
                 config.environment
             )
-            @proc.cwd = config.directory
+            if config.directory
+                config.logger.info("In directory: #{config.directory}")
+                @proc.cwd = config.directory
+            end
         end
 
         def start
@@ -43,8 +46,8 @@ module WebpackDriver
             @listener.join
         end
 
-        def valid?
-            last_compilation_message['operation'] == 'emit'
+        def in_progress?
+            !@error && @progress && @progress != 1
         end
 
         protected
@@ -52,42 +55,54 @@ module WebpackDriver
         def reset!
             @assets = Concurrent::Map.new
             @messages = Concurrent::Array.new
-        end
-
-        def last_compilation_message
-            msg = @messages.reverse_each.detect{ |l| l['type'] == 'compile' }
-            msg ? msg['value'] : {}
+            @last_compilation_message = {}
         end
 
         def record_error(error)
+            @error = error
             config.logger.error(
                 "#{error['name']}: #{error['resource']}\n#{error['message']}"
             )
         end
 
+        def record_progress(progress, msg)
+            @progress = progress
+            @last_compilation_message = msg['value']
+        end
+
         def record_message(msg)
+            @messages << msg unless msg['type'] == 'progress'
             case msg['type']
+            when 'status'
+                @last_status = msg['value']
             when 'asset'
-                name = msg['value']['name']
-                @assets[name] = Asset.new(name, msg['value']['size'])
+                Asset.record(@assets, msg['value'])
+            when 'compile'
+                record_progress msg['value']['progress'], msg
             when 'error'
                 record_error(msg['value'])
+            when 'config'
+                config.output_path = Pathname.new(msg['value']['output_path'])
             else
                 config.logger.debug(msg)
             end
-            @messages << msg
         end
 
 
         def listen_for_status_updates
             Thread.new do
                 @output.each_line do | l |
-                    match = l.match(/^STATUS: (.*)/)
-                    if match
-                        record_message(JSON.parse(match[1]))
-                        config.logger.debug(l.chomp)
-                    else
-                        config.logger.info(l.chomp)
+                puts l
+                    begin
+                        match = l.match(/^STATUS: (.*)/)
+                        if match
+                            record_message(JSON.parse(match[1]))
+                            config.logger.debug(l.chomp)
+                        else
+                            config.logger.info(l.chomp)
+                        end
+                    rescue => e
+                        config.logger.error "Exception #{e} encountered while processing line #{l}"
                     end
                 end
             end

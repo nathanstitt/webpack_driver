@@ -10,7 +10,7 @@ module WebpackDriver
         end
 
         def valid?
-            alive? && super
+            alive? && last_status == 'success'
         end
 
         private

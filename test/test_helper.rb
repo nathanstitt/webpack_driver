@@ -5,7 +5,7 @@ require_relative './process_mock.rb'
 require_relative '../lib/webpack_driver.rb'
 
 module HelperMethods
-    FIXTURES =  Pathname.new(__FILE__).dirname.join('fixtures')
+    FIXTURES = Pathname.new(__FILE__).dirname.join('fixtures')
 
     def create_process(klass, config:, output:, runtime: 0.1, stub: true)
         if stub
@@ -19,8 +19,13 @@ module HelperMethods
         end
     end
 
-    def test_configuration(options = {})
-        WebpackDriver::Configuration.new('/tmp/test-webpack.config.js', options)
+    def test_configuration(custom_options = {})
+        options = {
+            file: FIXTURES.join('webpack.config.js'),
+            tmp_directory: FIXTURES.join('..', 'tmp'),
+            output_path: FIXTURES.join('..', 'tmp')
+        }.merge(custom_options)
+        WebpackDriver::Configuration.new(options)
     end
 
     def process_output(name)

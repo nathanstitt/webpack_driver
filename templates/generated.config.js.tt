@@ -1,4 +1,4 @@
-var config = require('<%= options[:config].file %>');
+var config = require('./webpack.config.js');
 var WebpackDriverStatusPlugin = require('<%= options[:config].gem_root %>/lib/status-plugin.js');
 
 config.plugins = (config.plugins || []);

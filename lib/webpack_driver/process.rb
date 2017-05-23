@@ -72,7 +72,7 @@ module WebpackDriver
         end
 
         def record_message(msg)
-            unless msg['type'] == 'progress'
+            unless msg['type'] == 'compile'
                 @messages << msg
                 config.logger.debug(msg)
             end

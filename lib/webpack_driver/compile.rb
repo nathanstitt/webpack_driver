@@ -26,7 +26,7 @@ module WebpackDriver
         def write_manifest
             manifest = {}
             assets.each do | id, asset |
-                manifest[id] = asset.file
+                manifest[id] = asset.files
             end
             config.manifest_file.write JSON.generate manifest
         end
@@ -34,8 +34,8 @@ module WebpackDriver
         def read_manifest
             return unless config.manifest_file.exist?
             manifest = JSON.parse config.manifest_file.read
-            manifest.each do |id, file|
-                asset = Asset.new({ 'id' => id, 'file' => file })
+            manifest.each do |id, files|
+                asset = Asset.new({ 'id' => id, 'files' => files })
                 assets[asset.id] = asset
             end
         end

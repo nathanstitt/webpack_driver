@@ -18,6 +18,7 @@ class TestCompiles < MiniTest::Test
         assert process.config.manifest_file.exist?
         updated = WebpackDriver::Compile.new(test_configuration)
         assert_equal [:bundle], updated.assets.keys
+        assert_equal 'bundle.js', updated.assets[:bundle].file
     end
 
     def test_reading_assets

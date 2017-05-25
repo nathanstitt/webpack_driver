@@ -11,7 +11,7 @@ STATUS: {"type":"compile","value":{"progress":0.78,"operation":"additional chunk
 STATUS: {"type":"compile","value":{"progress":0.8,"operation":"optimize chunk assets","ms":47}}
 STATUS: {"type":"compile","value":{"progress":0.9,"operation":"optimize assets","ms":47}}
 STATUS: {"type":"compile","value":{"progress":0.95,"operation":"emitting","ms":47}}
-STATUS: {"type":"asset","value":{"id": "bundle", "file":"bundle.js","size":1425}}
+STATUS: {"type":"asset","value":{"id": "bundle", "files":["bundle.js"],"size":1425}}
 STATUS: {"type":"compile","value":{"progress":1,"operation":"","ms":773}}
 STATUS: {"type":"status","value":"success"}
 Hash: 8ac03f469601fbce2f89

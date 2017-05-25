@@ -2,23 +2,25 @@ module WebpackDriver
 
     class Asset
 
-        attr_reader :id, :file, :size
-        attr_accessor :has_source_map
+        attr_reader :id, :files, :size
 
         def initialize(attrs)
             @id   = attrs['id'].to_sym
             @size = attrs['size']
-            @file = attrs['file']
+            @files = attrs['files']
+        end
+
+        def file
+            files.first
+        end
+
+        def has_source_map?
+            files.length > 1 && files.last.end_with?('.map')
         end
 
         def self.record(map, attrs)
             id = attrs['id'].to_sym
-            file = attrs['file']
-            if map[id] && file && file.end_with?('.map')
-                map[id].has_source_map = true
-            else
-                map[id] = Asset.new(attrs)
-            end
+            map[id] = Asset.new(attrs)
         end
     end
 

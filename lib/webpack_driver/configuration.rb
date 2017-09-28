@@ -20,8 +20,6 @@ module WebpackDriver
 
         attr_reader :process
 
-
-
         ROOT = Pathname.new(__FILE__).dirname.join('..', '..')
 
         def initialize(options = {})

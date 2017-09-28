@@ -1,19 +1,7 @@
 STATUS: {"type":"dev-server","value":{"port":1833,"host":"localhost","outputPath":"/"}}
-STATUS: {"type":"compile","value":{"progress":0,"operation":"idle"}}
-STATUS: {"type":"compile","value":{"progress":0,"operation":"compile","ms":2}}
+STATUS: {"type":"status","value":"compiling"}
  http://localhost:8080/webpack-dev-server/
 webpack result is served from /
 content is served from /Users/nas/code/webpack_driver/test/fixtures
-STATUS: {"type":"compile","value":{"progress":0.1,"operation":"0/1 build modules","ms":38}}
-STATUS: {"type":"compile","value":{"progress":0.7,"operation":"1/1 build modules","ms":47}}
-STATUS: {"type":"compile","value":{"progress":0.71,"operation":"seal","ms":48}}
-STATUS: {"type":"compile","value":{"progress":0.73,"operation":"optimize","ms":49}}
-STATUS: {"type":"compile","value":{"progress":0.75,"operation":"hashing","ms":51}}
-STATUS: {"type":"compile","value":{"progress":0.76,"operation":"create chunk assets","ms":53}}
-STATUS: {"type":"compile","value":{"progress":0.78,"operation":"additional chunk assets","ms":58}}
-STATUS: {"type":"compile","value":{"progress":0.8,"operation":"optimize chunk assets","ms":58}}
-STATUS: {"type":"compile","value":{"progress":0.9,"operation":"optimize assets","ms":59}}
-STATUS: {"type":"compile","value":{"progress":0.95,"operation":"emit","ms":59}}
 STATUS: {"type":"asset","value":{"id": "bundle", "files":["bundle.js"],"size":1425}}
-STATUS: {"type":"compile","value":{"progress":1,"operation":"","ms":773}}
 STATUS: {"type":"status","value":"success"}

@@ -12,7 +12,7 @@ module WebpackDriver
 
         def_delegators :@proc, :alive?, :environment, :wait
 
-        attr_reader :config, :assets, :messages, :progress, :error,
+        attr_reader :config, :assets, :messages, :error,
                     :last_compilation_message, :last_status
 
         def initialize(script, config)
@@ -37,7 +37,6 @@ module WebpackDriver
             @proc.io.stdout = @proc.io.stderr = w
             @proc.start
             w.close
-            @progress = 0.0
             @listener = listen_for_status_updates
         end
 
@@ -48,7 +47,7 @@ module WebpackDriver
         end
 
         def in_progress?
-            !! ( !@error && @progress && @progress != 1 )
+            @last_status == 'compiling'
         end
 
         protected
@@ -66,9 +65,8 @@ module WebpackDriver
             )
         end
 
-        def record_progress(progress, msg)
-            @progress = progress
-            @last_compilation_message = msg['value']
+        def record_status(status)
+            @last_status = status
         end
 
         def record_message(msg)
@@ -78,11 +76,9 @@ module WebpackDriver
             end
             case msg['type']
             when 'status'
-                @last_status = msg['value']
+                record_status(msg['value'])
             when 'asset'
                 Asset.record(@assets, msg['value'])
-            when 'compile'
-                record_progress msg['value']['progress'], msg
             when 'error'
                 record_error(msg['value'])
             when 'config'

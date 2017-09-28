@@ -11,14 +11,14 @@ module WebpackDriver
         end
 
         def valid?
-            !alive? && complete? && last_status == 'success'
+            !alive? && complete?
         end
 
         def complete?
-            progress == 1
+            last_status == 'success'
         end
 
-        def record_progress(progress, msg)
+        def record_status(status)
             super
             write_manifest if complete?
         end

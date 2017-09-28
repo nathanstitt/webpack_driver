@@ -1,18 +1,6 @@
 STATUS: {"type":"dev-server","value":{}}
-STATUS: {"type":"compile","value":{"progress":0,"operation":"idle"}}
-STATUS: {"type":"compile","value":{"progress":0,"operation":"compile","ms":3}}
-STATUS: {"type":"compile","value":{"progress":0.1,"operation":"0/1 build modules","ms":22}}
-STATUS: {"type":"compile","value":{"progress":0.7,"operation":"1/1 build modules","ms":32}}
-STATUS: {"type":"compile","value":{"progress":0.71,"operation":"seal","ms":33}}
-STATUS: {"type":"compile","value":{"progress":0.73,"operation":"optimize","ms":34}}
-STATUS: {"type":"compile","value":{"progress":0.75,"operation":"hashing","ms":36}}
-STATUS: {"type":"compile","value":{"progress":0.76,"operation":"create chunk assets","ms":42}}
-STATUS: {"type":"compile","value":{"progress":0.78,"operation":"additional chunk assets","ms":46}}
-STATUS: {"type":"compile","value":{"progress":0.8,"operation":"optimize chunk assets","ms":47}}
-STATUS: {"type":"compile","value":{"progress":0.9,"operation":"optimize assets","ms":47}}
-STATUS: {"type":"compile","value":{"progress":0.95,"operation":"emitting","ms":47}}
+STATUS: {"type":"status","value":"compiling"}
 STATUS: {"type":"asset","value":{"id": "bundle", "files":["bundle.js"],"size":1425}}
-STATUS: {"type":"compile","value":{"progress":1,"operation":"","ms":773}}
 STATUS: {"type":"status","value":"success"}
 Hash: 8ac03f469601fbce2f89
 Version: webpack 1.14.0

@@ -4,7 +4,8 @@ class TestDevServer < MiniTest::Test
 
     def test_starting_dev_server
         process = create_process(WebpackDriver::DevServer,
-                                 config: test_configuration(port: 1833),
+                                 stub: true,
+                                 config: test_configuration(port: '1833'),
                                  output: :simple_dev_server,
                                  runtime: 0.3)
         begin
